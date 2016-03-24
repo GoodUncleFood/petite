@@ -1,6 +1,6 @@
 # Petite
 
-> Petite is designed to power a single RESTful JSON microservice, running on a single port. Petite services are presumed to be running behind an external router of some kind. As such, each service handles the HTTP methods for a single route only and has a single set of controllers (one for each http method). 
+> Petite is designed to power a single RESTful JSON microservice, running on a single port. Petite services are presumed to be running behind an external router/reverse-proxy (as part of a larger API). As such, each service only handles the HTTP methods for a single route, and allows you to define a single controller for each HTTP method. 
 
 [ ![Codeship Status for GoodUncleFood/petite](https://codeship.com/projects/b0e551e0-d427-0133-7a36-1e4d5c815c8f/status?branch=master)](https://codeship.com/projects/142366)
 
