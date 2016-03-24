@@ -1,7 +1,6 @@
 # Petite
 
 > A micro-services toolkit for node.js. Spin up a single RESTful microservice with ease. 
-
 [ ![Codeship Status for GoodUncleFood/petite](https://codeship.com/projects/b0e551e0-d427-0133-7a36-1e4d5c815c8f/status?branch=master)](https://codeship.com/projects/142366)
 
 ## Install
@@ -16,7 +15,6 @@ npm install petite
 
 ```
 const Petite = require('petite');
-
 ```
 
 ### Create a new microservice
@@ -69,9 +67,10 @@ petite.envConfig('staging',{
 petite.envConfig('production',{
 	'port' : 443
 });
-
 ```
+
 ### Start the service
+
 ```
 petite.start();
 ```
