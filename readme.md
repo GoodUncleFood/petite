@@ -90,7 +90,7 @@ With the addController() function, you define which controller should receive th
 
 The data object contains all the request data you should need to process the request.
 
-```json
+```js
 {
 	'path' : 'the/requested/path',
 	'pathArray' :,['the','requested','path'],
