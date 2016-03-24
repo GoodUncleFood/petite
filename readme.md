@@ -87,8 +87,13 @@ The requested uri is checked against the required and disallowed uris you set wi
 The headers sent with the request are checked against the required headers you define with the requiredHeader() function. A 406 is returned if this check fails.
 
 ### Step 3: Routing to controllers
-With the addController() function, you define which controller should receive the request data for each http method (POST, GET, PUT, DELETE, etc). If a request is received via a method that has no matching controller (OPTIONS or HEAD for example), a 405 is returned. If there is a matching controller for that method, that controller is passed a single data object and a callback. See the next section below ("Setting up Your Controllers") for details.
+With the addController() function, you define which controller should receive the request data for each http method (POST, GET, PUT, DELETE, etc). If a request is received via a method that has no matching controller (OPTIONS or HEAD for example), a 405 is returned. If there is a matching controller for that method, that controller is passed a single data object and a callback. 
 
+
+## Setting up Your Controllers
+Your controllers should be normal functions that accept two parameters: a data object, and a callback.
+
+### The data object
 The data object contains all the request data you should need to process the request.
 
 ```js
@@ -107,27 +112,43 @@ The data object contains all the request data you should need to process the req
 * **data.payload**: An object containing the payload sent. If the payload was not included or was not valid JSON, data.payload will be an empty object.
 * **data.headers**: An object containg key-value pairs of the headers sent with the request. All headers and header-values are expressed in lowercase.
 
+## Accessing config data
 
+The current config data that Petite is running under can be accessed at petite.config.
 
-## Setting up Your Controllers
-Your controllers should be normal functions that accept two parameters: a data object (as detailed above), and a callback.
+The petite.defaultConfig() and petite.envConfig() functions (detailed above) allow you to set default and environment-specific configuration variables. When your node application is started, Petite will check the NODE_ENV variable for an environment name. If you have set a configuration object for that environment, then petite.config will inherit that environment's config object. If no configuration object has been set for that environment, then the default configuration object will be used instead.
 
-After processing the data passed to it, your controller should return two things: an HTTP status code (a 3 digit number), and (optionally) a payload object that should be returned to the requester.
+## Calling back
+
+After processing the data passed to it, your controller should callback two things: an HTTP status code (a 3 digit number), and (optionally) a payload object. The status code and payload that your controllers call back will be returned by the microservice. If your controller throws an exception, a 500 error will be returned by the service.
+
+```js
+  callback(200, {'foo':'bar'});
+```
+
+## Full example
 
 ```js
 var myPostController = function(data, callback){
 
-  // Process the data here
-  var statusCode = 200;
-  var payload = {'foo':'bar'};
-	
-  // Callback
-  callback(statusCode, payload);
-
+  // Get the payload data
+  var requestPayload = data.payload;
+  
+  // Get the config data for this environment
+  var configData = petite.config;
+  
+  // Throw an error if needed (which will make the microservice return a 500)
+  if(typeof(configData.foo) == 'undefined'){
+  	throw('Foo was not defined in this environment');
+  } else {
+  	// Return a status code and a payload
+    var responsePayload = {'foo':'bar'};
+    var statusCode = 200;
+    callback(statusCode, payload);
+  }
 });
 ```
 
-The status code and payload that your controllers callback will be returned by the API. If your controller throws an exception, a 500 error will be returned by the API.
 
 
 
