@@ -1,6 +1,6 @@
 {
   "name": "petite",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "A microservice framework for node.js",
   "author": "Malcolm Diggs <malcolmdiggs@gmail.com> (https://linkedin.com/in/malcolmdiggs)",
   "license": "MIT",
@@ -34,7 +34,7 @@
     "gulp-load-plugins": "1.2.0",
     "gulp-mocha": "2.2.0",
     "istanbul": "0.4.2",
-    "jshint" : "2.9.1",
+    "jshint": "2.9.1",
     "jshint-stylish": "2.1.0",
     "mocha": "2.4.5",
     "random-string": "0.1.2",
