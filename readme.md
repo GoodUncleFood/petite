@@ -5,7 +5,7 @@
 
 ## Install
 
-```
+```bash
 npm install petite
 ```
 
@@ -13,26 +13,26 @@ npm install petite
 
 ### Require the module
 
-```
+```js
 const Petite = require('petite');
 ```
 
 ### Create a new microservice
 
-```
+```js
 var petite = new Petite();
 ```
 
 ### Set url requirements for incoming requests
 
-```
+```js
 petite.requiredUrl('myservice')
 petite.disallowedUrl('myservice/*');
 ```
 
 ### Set header requirements
 
-```
+```js
 petite.requiredHeader('accept','json');
 petite.requiredHeader('client-id','*');
 petite.requiredHeader('accept-encoding','gzip');
@@ -40,7 +40,7 @@ petite.requiredHeader('accept-encoding','gzip');
 
 ### Add controllers
 
-```
+```js
 petite.addController('POST', myPostController);
 petite.addController('GET', myGetController);
 petite.addController('PUT', myPutController);
@@ -49,7 +49,7 @@ petite.addController('DELETE', myDeleteController);
 
 ### Define the default configuration
 
-```
+```js
 petite.defaultConfig({
 	'port' : 3000,
 	'foo' : 'bar'
@@ -59,7 +59,7 @@ petite.defaultConfig({
 ### Add environment-specific configuration.
 #### These inherit all default configs, but those can be overriden.
 
-```
+```js
 petite.envConfig('staging',{
 	'port' : 80
 });
@@ -71,7 +71,7 @@ petite.envConfig('production',{
 
 ### Start the service
 
-```
+```js
 petite.start();
 ```
 
@@ -86,15 +86,11 @@ The requested uri is checked against the required and disallowed uris you set wi
 The headers sent with the request are checked against the required headers you define with the requiredHeader() function. A 406 is returned if this check fails.
 
 ### Step 3: Routing to controllers
-With the addController() function, you define which controller should receive the request data for each http method (POST, GET, PUT, DELETE, etc). If a request is received via a method that has no matching controller (OPTIONS or HEAD for example), a 405 is returned. If there is a matching controller for that method, that controller is passed a single data object and a callback 
-
-```
-yourController(data, callback)
-```
+With the addController() function, you define which controller should receive the request data for each http method (POST, GET, PUT, DELETE, etc). If a request is received via a method that has no matching controller (OPTIONS or HEAD for example), a 405 is returned. If there is a matching controller for that method, that controller is passed a single data object and a callback. See the next section below ("Setting up Your Controllers") for details.
 
 The data object contains all the request data you should need to process the request.
 
-```
+```json
 {
 	'path' : 'the/requested/path',
 	'pathArray' :,['the','requested','path'],
@@ -117,7 +113,7 @@ Your controllers should be normal functions that accept two parameters: a data o
 
 After processing the data passed to it, your controller should return two things: an HTTP status code (a 3 digit number), and (optionally) a payload object that should be returned to the requester.
 
-```
+```js
 var myPostController = function(data, callback){
 
 	// Process the data here
