@@ -153,10 +153,10 @@ var myPostController = function(data, callback){
   if(typeof(configData.foo) == 'undefined'){
   	throw('Foo was not defined in this environment');
   } else {
-  	// Return a status code and a payload
+    // Return a status code and a payload
     var responsePayload = {'foo':'bar'};
     var statusCode = 200;
-    callback(statusCode, payload);
+    callback(statusCode, responsePayload);
   }
 });
 ```
