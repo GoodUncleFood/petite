@@ -5,7 +5,7 @@
 [![Build Status](https://travis-ci.org/GoodUncleFood/petite.svg?branch=master)](https://travis-ci.org/GoodUncleFood/petite)
 [ ![Codeship Status for GoodUncleFood/petite](https://codeship.com/projects/b0e551e0-d427-0133-7a36-1e4d5c815c8f/status?branch=master)](https://codeship.com/projects/142366)
 [![Dependency Status](https://gemnasium.com/GoodUncleFood/petite.svg)](https://gemnasium.com/GoodUncleFood/petite)
-
+[![Coverage Status](https://coveralls.io/repos/github/GoodUncleFood/petite/badge.svg?branch=master)](https://coveralls.io/github/GoodUncleFood/petite?branch=master)
 
 ## Install
 
