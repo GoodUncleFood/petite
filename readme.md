@@ -1,6 +1,6 @@
 # Petite
 
-> Petite is designed to power a single RESTful JSON microservice, running on a single port. Petite services are presumed to be running behind an external router/reverse-proxy (as part of a larger API). As such, each service only handles the HTTP methods for a single route, and allows you to define a single controller for each HTTP method. 
+> Petite is designed to power a single RESTful JSON microservice, running on a single port. Petite services are presumed to be running behind an external router/reverse-proxy (in their own container, but as part of a larger set of API services). As such, each service only processes a single route, and allows you to define a single controller for each HTTP method accessible on that route. Petite is developed and maintained by [Good Uncle](http://gooduncle.com).
 
 [ ![Codeship Status for GoodUncleFood/petite](https://codeship.com/projects/b0e551e0-d427-0133-7a36-1e4d5c815c8f/status?branch=master)](https://codeship.com/projects/142366)
 
@@ -160,6 +160,30 @@ var myPostController = function(data, callback){
   }
 });
 ```
+
+
+
+-----
+
+
+
+
+## Deploying
+
+Petite services are designed to run in standalone containers, behind an external reverse-proxy or router (which sends requests to the container only when requests are received with matching paths). Dockerizing a Petite service is as simple as including a Dockerfile like so:
+
+```
+# Use the Node 4.0 docker image
+FROM node:4-onbuild
+
+# Expose ports needed by the environments
+EXPOSE  80
+EXPOSE  443
+EXPOSE  3000
+```
+
+
+
 
 
 
