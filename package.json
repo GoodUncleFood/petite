@@ -1,6 +1,6 @@
 {
   "name": "petite",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A micro-services toolkit for node.js. Spin up a single RESTful microservice with ease.",
   "author": "Malcolm Diggs <malcolmdiggs@gmail.com> (https://linkedin.com/in/malcolmdiggs)",
   "license": "MIT",
