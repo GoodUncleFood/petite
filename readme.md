@@ -51,8 +51,8 @@ petite.addController('DELETE', myDeleteController);
 
 ```js
 petite.defaultConfig({
-	'port' : 3000,
-	'foo' : 'bar'
+  'port' : 3000,
+  'foo' : 'bar'
 });
 ```
 
@@ -61,11 +61,11 @@ petite.defaultConfig({
 
 ```js
 petite.envConfig('staging',{
-	'port' : 80
+  'port' : 80
 });
 
 petite.envConfig('production',{
-	'port' : 443
+  'port' : 443
 });
 ```
 
@@ -92,11 +92,11 @@ The data object contains all the request data you should need to process the req
 
 ```js
 {
-	'path' : 'the/requested/path',
-	'pathArray' :,['the','requested','path'],
-	'params' : {'foo' : 'bar'},
-	'payload' : {'fizz : 'buzz'},
-	'headers' : {'accept-encoding' : 'gzip'}
+  'path' : 'the/requested/path',
+  'pathArray' :,['the','requested','path'],
+  'params' : {'foo' : 'bar'},
+  'payload' : {'fizz' : 'buzz'},
+  'headers' : {'accept-encoding' : 'gzip'}
 }
 ```
 
@@ -116,12 +116,12 @@ After processing the data passed to it, your controller should return two things
 ```js
 var myPostController = function(data, callback){
 
-	// Process the data here
-	var statusCode = 200;
-	var payload = {'foo':'bar'};
+  // Process the data here
+  var statusCode = 200;
+  var payload = {'foo':'bar'};
 	
-	// Callback
-	callback(statusCode, payload);
+  // Callback
+  callback(statusCode, payload);
 
 });
 ```
