@@ -1,0 +1,7 @@
+{
+
+    "node"  : true,    // Node.js
+    "expr"  : true, // Silence the "Expected an assignment or function call and instead saw an expression." error that occurs in test scripts.  
+    "esversion" : 6
+
+}
