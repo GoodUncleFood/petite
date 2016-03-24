@@ -151,7 +151,7 @@ var myPostController = function(data, callback){
   
   // Throw an error if needed (which will make the microservice return a 500)
   if(typeof(configData.foo) == 'undefined'){
-  	throw('Foo was not defined in this environment');
+    throw('Foo was not defined in this environment');
   } else {
     // Return a status code and a payload
     var responsePayload = {'foo':'bar'};
