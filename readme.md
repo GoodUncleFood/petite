@@ -4,7 +4,6 @@
 
 [ ![Codeship Status for GoodUncleFood/petite](https://codeship.com/projects/b0e551e0-d427-0133-7a36-1e4d5c815c8f/status?branch=master)](https://codeship.com/projects/142366)
 
-
 ## Install
 
 ```
@@ -13,34 +12,56 @@ npm install petite
 
 ## Usage
 
+### Require the module
+
 ```
 const Petite = require('petite');
 
-// Create a new microservice
-var petite = new Petite();
+```
 
-// Set url requirements for incoming requests
+### Create a new microservice
+
+```
+var petite = new Petite();
+```
+
+### Set url requirements for incoming requests
+
+```
 petite.requiredUrl('myservice')
 petite.disallowedUrl('myservice/*');
+```
 
-// Set header requirements
+### Set header requirements
+
+```
 petite.requiredHeader('accept','json');
 petite.requiredHeader('client-id','*');
 petite.requiredHeader('accept-encoding','gzip');
+```
 
-// Add controllers 
+### Add controllers
+
+```
 petite.addController('POST', myPostController);
 petite.addController('GET', myGetController);
 petite.addController('PUT', myPutController);
 petite.addController('DELETE', myDeleteController);
+```
 
-// Define the default configuration
+### Define the default configuration
+
+```
 petite.defaultConfig({
 	'port' : 3000,
 	'foo' : 'bar'
 });
+```
 
-// Add environment-specific configuration. These inherit all default configs, but those can be overriden.
+### Add environment-specific configuration.
+#### These inherit all default configs, but those can be overriden.
+
+```
 petite.envConfig('staging',{
 	'port' : 80
 });
@@ -49,11 +70,10 @@ petite.envConfig('production',{
 	'port' : 443
 });
 
-
-// Start the service
+```
+### Start the service
+```
 petite.start();
-
-
 ```
 
 ## How it Works
