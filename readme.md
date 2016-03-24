@@ -2,8 +2,8 @@
 
 > Petite is designed to power a single RESTful JSON microservice, running on a single port. Petite services are presumed to be running behind an external router/reverse-proxy (in their own container, but as part of a larger set of API services). As such, each service only processes a single route, and allows you to define a single controller for each HTTP method accessible on that route. Petite is developed and maintained by [Good Uncle](http://gooduncle.com).
 
+[![Build Status](https://travis-ci.org/GoodUncleFood/petite.svg?branch=master)](https://travis-ci.org/GoodUncleFood/petite)
 [ ![Codeship Status for GoodUncleFood/petite](https://codeship.com/projects/b0e551e0-d427-0133-7a36-1e4d5c815c8f/status?branch=master)](https://codeship.com/projects/142366)
-
 [![Dependency Status](https://gemnasium.com/GoodUncleFood/petite.svg)](https://gemnasium.com/GoodUncleFood/petite)
 
 
