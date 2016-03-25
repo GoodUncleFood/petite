@@ -1,6 +1,6 @@
 {
   "name": "petite",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "description": "A microservice framework for node.js",
   "author": "Malcolm Diggs <malcolmdiggs@gmail.com> (https://linkedin.com/in/malcolmdiggs)",
   "license": "MIT",
@@ -45,7 +45,7 @@
     "jshint": "2.9.1",
     "jshint-stylish": "2.1.0",
     "mocha": "2.4.5",
-    "random-string" : "0.1.2",
+    "random-string": "0.1.2",
     "run-sequence": "1.1.5",
     "should": "8.3.0",
     "supertest": "1.2.0"
