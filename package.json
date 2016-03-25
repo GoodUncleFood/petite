@@ -1,6 +1,6 @@
 {
   "name": "petite",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "A microservice framework for node.js",
   "author": "Malcolm Diggs <malcolmdiggs@gmail.com> (https://linkedin.com/in/malcolmdiggs)",
   "license": "MIT",
