@@ -200,6 +200,38 @@ describe('Configuration object', function(){
     });
 
 
+    // setCurrentConfig
+
+    describe('setCurrentConfig function', function(){
+
+        it('current config should be empty object before setCurrentConfig is run', function(done){
+            var config = require(tmp.path);
+            config.currentConfig.should.eql({});
+            done();
+        });
+
+        it('current config should inherit default object after running setCurrentConfig', function(done){
+            var config = require(tmp.path);
+            var val = config.setCurrentConfig();
+            val.should.eql('def');
+            config.currentConfig.should.eql(config.envs.def);
+            done();
+        });
+
+        it('current config should inherit env object after running setCurrentConfig and setting NODE_ENV', function(done){
+            var config = require(tmp.path);
+            config.setConfigOption('testingfoo','testingbar','testing');
+            process.env.NODE_ENV = 'testing';
+            var val = config.setCurrentConfig();
+            val.should.eql('testing');
+            config.currentConfig.testingfoo.should.eql('testingbar');
+            done();
+        });
+
+
+    });
+
+
 
     // After
 
