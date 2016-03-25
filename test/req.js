@@ -185,6 +185,8 @@ describe('Req object', function(){
             val.pathArray.should.eql([]);
             val.headers.should.eql({});
             val.payload.should.eql({});
+            compare = val.method === null ? true : false;
+            compare.should.eql(true);
             done();
         });
 
@@ -197,6 +199,8 @@ describe('Req object', function(){
             val.pathArray.should.eql([]);
             val.headers.should.eql({});
             val.payload.should.eql({});
+            compare = val.method === null ? true : false;
+            compare.should.eql(true);
             done();
         });
 

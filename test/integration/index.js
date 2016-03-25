@@ -45,12 +45,12 @@ describe('/', function(){
      *
      */
     describe('POST', function(){
-        it('should return 404', function(done){
+        it('should return 405', function(done){
         config.request
             .post(config.service)
             .set(config.valid_headers)
             .expect(valid_response)
-            .expect(404)
+            .expect(405)
             .end(done);
         });
     });
@@ -60,12 +60,12 @@ describe('/', function(){
      *
      */
     describe('GET', function(){
-        it('should return 404', function(done){
+        it('should return 405', function(done){
         config.request
             .get(config.service)
             .set(config.valid_headers)
             .expect(valid_response)
-            .expect(404)
+            .expect(405)
             .end(done);
         });
     });
@@ -76,12 +76,12 @@ describe('/', function(){
      *
      */
     describe('PUT', function(){
-        it('should return 404', function(done){
+        it('should return 405', function(done){
         config.request
             .put(config.service)
             .set(config.valid_headers)
             .expect(valid_response)
-            .expect(404)
+            .expect(405)
             .end(done);
         });
     });
@@ -93,12 +93,12 @@ describe('/', function(){
      */
 
     describe('DELETE', function(){
-        it('should return 404', function(done){
+        it('should return 405', function(done){
         config.request
             .del(config.service)
             .set(config.valid_headers)
             .expect(valid_response)
-            .expect(404)
+            .expect(405)
             .end(done);
         });
     });

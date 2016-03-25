@@ -9,7 +9,6 @@ var valid_response = require('./_validResponse');
 var tmp = require('./_tmpData');
 var should = require('should');
 var app = require('./../../index');
-var randomString = require('random-string');
 
 
 /*
@@ -17,7 +16,7 @@ var randomString = require('random-string');
  *
  */
 
-describe('/{random}', function(){
+describe('/test', function(){
 
     /*
      * Before all
@@ -25,18 +24,24 @@ describe('/{random}', function(){
      */
     before(function(done){
         // Set request urls
-        config.service = randomString({length: 20})+'/'+randomString({length: 20});
+        config.service = '';
         config.request = request(config.base_url);
 
         tmp = {
             index_path: './../../index'
         };
 
+        var app = require(tmp.index_path);
+
+        // Add the controller
+        var controller = function(data,callback){
+            callback(200,{'foo':'bar'});
+        };
 
         // Start the server
-        var app = require(tmp.index_path);
+        app.addController('POST',controller);
+        
         app.lib.server.listen();
-
 
         done();
     });  
@@ -47,22 +52,12 @@ describe('/{random}', function(){
      *
      */
     describe('POST', function(){
-        it('should return 405', function(done){
+        it('should return 200', function(done){
         config.request
             .post(config.service)
             .set(config.valid_headers)
             .expect(valid_response)
-            .expect(405)
-            .end(done);
-        });
-
-        it('should return 405 even when payload is sent', function(done){
-        config.request
-            .post(config.service)
-            .send({'foo' : 'bar'})
-            .set(config.valid_headers)
-            .expect(valid_response)
-            .expect(405)
+            .expect(200)
             .end(done);
         });
     });
@@ -80,16 +75,6 @@ describe('/{random}', function(){
             .expect(405)
             .end(done);
         });
-
-        it('should return 405 even when params are sent', function(done){
-        config.request
-            .get(config.service)
-            .query({'foo' : 'bar'})
-            .set(config.valid_headers)
-            .expect(valid_response)
-            .expect(405)
-            .end(done);
-        });
     });
 
          
@@ -101,16 +86,6 @@ describe('/{random}', function(){
         it('should return 405', function(done){
         config.request
             .put(config.service)
-            .set(config.valid_headers)
-            .expect(valid_response)
-            .expect(405)
-            .end(done);
-        });
-
-        it('should return 405 even when payload is sent', function(done){
-        config.request
-            .put(config.service)
-            .send({'foo' : 'bar'})
             .set(config.valid_headers)
             .expect(valid_response)
             .expect(405)
@@ -133,21 +108,14 @@ describe('/{random}', function(){
             .expect(405)
             .end(done);
         });
-
-        it('should return 405 even when payload is sent', function(done){
-        config.request
-            .del(config.service)
-            .send({'foo' : 'bar'})
-            .set(config.valid_headers)
-            .expect(valid_response)
-            .expect(405)
-            .end(done);
-        });
     });
 
     // After
 
     after(function(done){
+
+        // Remove the controllers
+        app.lib.controllers.set = {};
 
         // Stop Server
         app.lib.server.close();
@@ -156,5 +124,6 @@ describe('/{random}', function(){
     }); 
 
 });
+
 
 
