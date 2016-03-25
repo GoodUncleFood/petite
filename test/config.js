@@ -196,6 +196,14 @@ describe('Configuration object', function(){
             done();
         });
 
+        it('Should allow objects to be set for values', function(done){
+            var config = require(tmp.path);
+            var val = config.setConfigOption('key',{'fizz':'buzz'},'myenv');
+            should.exist(config.envs.myenv.key.fizz);
+            config.envs.myenv.key.fizz.should.eql('buzz');
+            val.should.be.ok;
+            done();
+        });
 
     });
 
