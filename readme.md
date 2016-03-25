@@ -53,13 +53,12 @@ petite.setConfig('key','value');
 ```
 
 ### Add environment-specific configuration.
-#### Each environment inherits all the default config variables, which you can then override on a case by case basis.
 
 ```js
 petite.setConfig('key','value','environmentName');
 petite.setConfig('key','value','someOtherEnvironentName');
 ```
-Note: There are 3 predefined variables that all environments inherit (including the default environment). These can be overriden as needed.
+Note: Each environment inherits all the default config variables, which you can then override on a case by case basis. Also, there are 3 predefined variables that all environments inherit (including the default environment). These can be overriden as needed.
 * port: 3000 (Which port the service should listen on)
 * logToConsole : true (Should the service log events and message to the console?)
 * debug : false (Should the service throw exceptions when they are encountered?)
