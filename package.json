@@ -6,7 +6,6 @@
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
     "test": "gulp test",
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
   },
@@ -19,10 +18,17 @@
     "url": "https://github.com/GoodUncleFood/petite.git"
   },
   "keywords": [
+    "microservice",
+    "micro-service",
     "microservices",
+    "micro-services",
+    "container",
+    "containers",
+    "docker",
     "http",
     "api",
-    "restful"
+    "restful",
+    "rest"
   ],
   "dependencies": {
     "request-payload": "1.0.1"

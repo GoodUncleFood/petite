@@ -19,28 +19,22 @@ npm install petite
 ### Require the module
 
 ```js
-const Petite = require('petite');
-```
-
-### Create a new microservice
-
-```js
-var petite = new Petite();
+var petite = require('petite');
 ```
 
 ### Set url requirements for incoming requests
 
 ```js
-petite.requiredUrl('myservice')
-petite.disallowedUrl('myservice/*');
+petite.requireUrl('myservice')
+petite.disallowUrl('myservice/*');
 ```
 
 ### Set header requirements
 
 ```js
-petite.requiredHeader('accept','json');
-petite.requiredHeader('client-id','*');
-petite.requiredHeader('accept-encoding','gzip');
+petite.requireHeader('accept','json');
+petite.requireHeader('client-id','*');
+petite.requireHeader('accept-encoding','gzip');
 ```
 
 ### Add controllers
@@ -90,10 +84,10 @@ petite.start();
 This is what happens when a request comes in to your Petite microservice.
 
 ### Step 1: URI validation
-The requested uri is checked against the required and disallowed uris you set with the requiredUrl() and disallowedUrl() functions. A 404 is returned if this check fails.
+The requested uri is checked against the required and disallowed uris you set with the requireUrl() and disallowUrl() functions. A 404 is returned if this check fails.
 
 ### Step 2: Header validation
-The headers sent with the request are checked against the required headers you define with the requiredHeader() function. A 406 is returned if this check fails.
+The headers sent with the request are checked against the required headers you define with the requireHeader() function. A 406 is returned if this check fails.
 
 ### Step 3: Routing to controllers
 With the addController() function, you define which controller should receive the request data for each http method (POST, GET, PUT, DELETE, etc). If a request is received via a method that has no matching controller (OPTIONS or HEAD for example), a 405 is returned. If there is a matching controller for that method, that controller is passed a single data object and a callback. 
