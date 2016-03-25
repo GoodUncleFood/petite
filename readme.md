@@ -106,15 +106,17 @@ The data object contains all the request data you should need to process the req
   'pathArray' :,['the','requested','path'],
   'params' : {'foo' : 'bar'},
   'payload' : {'fizz' : 'buzz'},
-  'headers' : {'accept-encoding' : 'gzip'}
+  'headers' : {'accept-encoding' : 'gzip'},
+  'method' : 'post'
 }
 ```
 
 * **data.path**: The requested path received by the service, after the leading and trailing slashes have been trimmed. If the root was requested, the path will be null.
 * **data.pathArray**: An array containing the data.path after is has been split/exploded by slashes. If the data.path contained no slashes, the array will contain one string. If the data.path was null, the array will be empty.
-* **data.params**: An object containing key-value pairs of the url parameters sent with the request (from the request string)
+* **data.params**: An object containing key-value pairs of the url parameters sent with the request (from the request string). If no params were sent, data.params will be an empty object.
 * **data.payload**: An object containing the payload sent. If the payload was not included or was not valid JSON, data.payload will be an empty object.
-* **data.headers**: An object containg key-value pairs of the headers sent with the request. All headers and header-values are expressed in lowercase.
+* **data.headers**: An object containg key-value pairs of the headers sent with the request. All headers and header-values are expressed in lowercase. If no headers are sent data.headers will be an empty object.
+* **data.method**: A lowercase string of the http method of the request. If the method cannot be determined, data.method will be null.
 
 ### Accessing config data
 

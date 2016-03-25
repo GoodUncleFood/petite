@@ -176,6 +176,30 @@ describe('Req object', function(){
     // getData
     describe('getData', function(){
 
+        it('should return default object if req is undefined', function(done){
+            var request = require(tmp.path);
+            var val = request.getData(undefined);
+            val.params.should.eql({});
+            var compare = val.path === null ? true : false;
+            compare.should.eql(true);
+            val.pathArray.should.eql([]);
+            val.headers.should.eql({});
+            val.payload.should.eql({});
+            done();
+        });
+
+        it('should return default object if req is empty object', function(done){
+            var request = require(tmp.path);
+            var val = request.getData({});
+            val.params.should.eql({});
+            var compare = val.path === null ? true : false;
+            compare.should.eql(true);
+            val.pathArray.should.eql([]);
+            val.headers.should.eql({});
+            val.payload.should.eql({});
+            done();
+        });
+
     });
 
     // After
