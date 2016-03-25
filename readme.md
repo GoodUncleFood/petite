@@ -59,6 +59,11 @@ petite.setConfig('key','value');
 petite.setConfig('key','value','environmentName');
 petite.setConfig('key','value','someOtherEnvironentName');
 ```
+Note: There are 3 predefined default variables (which can be overriden)
+* port: 3000 (Which port the service should listen on)
+* logToConsole : true (Should the service log events and message to the console?)
+* debug : false (Should the service throw exceptions when they are encountered?)
+
 
 ### Start the service
 
