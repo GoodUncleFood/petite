@@ -49,23 +49,15 @@ petite.addController('DELETE', myDeleteController);
 ### Define the default configuration
 
 ```js
-petite.defaultConfig({
-  'port' : 3000,
-  'foo' : 'bar'
-});
+petite.setConfig('key','value');
 ```
 
 ### Add environment-specific configuration.
-#### These inherit all default configs, but those can be overriden.
+#### Each environment inherits all the default config variables, which you can then override on a case by case basis.
 
 ```js
-petite.envConfig('staging',{
-  'port' : 80
-});
-
-petite.envConfig('production',{
-  'port' : 443
-});
+petite.setConfig('key','value','environmentName');
+petite.setConfig('key','value','someOtherEnvironentName');
 ```
 
 ### Start the service
@@ -124,7 +116,7 @@ The data object contains all the request data you should need to process the req
 
 The current config data that Petite is running under can be accessed at petite.config.
 
-The petite.defaultConfig() and petite.envConfig() functions (detailed above) allow you to set default and environment-specific configuration variables. When your node application is started, Petite will check the NODE_ENV variable for an environment name. If you have set a configuration object for that environment, then petite.config will inherit that environment's config object. If no configuration object has been set for that environment, then the default configuration object will be used instead.
+The petite.setConfig() function (detailed above) allows you to set default or environment-specific configuration variables. When your node application is started, Petite will check the NODE_ENV variable for an environment name. If you have set configuration variables for that environment, then petite.config will inherit that environment's configuration. If no configuration  has been set for that environment, then the default configuration object will be used instead.
 
 ### Calling back
 
