@@ -33,7 +33,7 @@ gulp.task('test', function(callback){
 
 // Lint the codebase (but not the node_modules)
 gulp.task('lint', function () {
-  return gulp.src(['*.js','app/**.js', 'test/**.js'])
+  return gulp.src(['*.js','lib/**.js', 'test/**.js'])
     .pipe($.jshint())
     .pipe($.jshint.reporter('jshint-stylish'))
     .pipe($.jshint.reporter('fail'));
