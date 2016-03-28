@@ -265,6 +265,47 @@ describe('Req object', function(){
             done();
         });
 
+        it('should return false if res is not defined', function(done){
+            var app = require(tmp.index_path);
+            var tmpController = function(data, callback){
+                callback(200);
+            };
+            app.addController('post',tmpController);
+            var request = app.lib.req;
+            var req = {
+                'url' : 'foo/bar/?fizz=buzz',
+                'method' : 'POST',
+                'headers' : {
+                    'accept-encoding' : 'gzip'
+                },
+                'body' : {
+                    'lorem' : 'ipsum'
+                }
+            };
+            var val = request.process(req,undefined);
+            val.should.eql(false);
+            app.lib.controllers.set = {};
+            done();
+        });
+
+        it('should return false if req is not defined', function(done){
+            var app = require(tmp.index_path);
+            var tmpController = function(data, callback){
+                callback(200);
+            };
+            app.addController('post',tmpController);
+            var request = app.lib.req;
+            var res = {
+                'setHeader' : function(){},
+                'writeHead' : function(){},
+                'end' : function(){}
+            };
+            var val = request.process(undefined,res);
+            val.should.eql(false);
+            app.lib.controllers.set = {};
+            done();
+        });
+
     });
 
 
