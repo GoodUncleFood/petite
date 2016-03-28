@@ -150,18 +150,87 @@ describe('Req object', function(){
 
     });
 
-    // requiredUrls
-    describe('requiredUrls', function(){
-
-    });
-
     // setRequiredUrl
     describe('setRequiredUrl', function(){
 
-        it('should return true', function(done){
+        it('requiredUrls should be empty array before being manipulated', function(done){
+            var request = require(tmp.path);
+            var type = typeof(request.requiredUrls);
+            type.should.eql('object');
+            var instance = request.requiredUrls instanceof Array;
+            instance.should.eql(true);
+            request.requiredUrls.length.should.eql(0);
+            done();
+        });
+
+        it('should return false if no pattern is passed', function(done){
             var request = require(tmp.path);
             var val = request.setRequiredUrl();
+            val.should.eql(false);
+            done();
+        });
+
+        it('should return false if object is passed', function(done){
+            var request = require(tmp.path);
+            var val = request.setRequiredUrl({});
+            val.should.eql(false);
+            done();
+        });
+
+        it('should return false if null is passed', function(done){
+            var request = require(tmp.path);
+            var val = request.setRequiredUrl(null);
+            val.should.eql(false);
+            done();
+        });
+
+        it('should return false if false is passed', function(done){
+            var request = require(tmp.path);
+            var val = request.setRequiredUrl(false);
+            val.should.eql(false);
+            done();
+        });
+
+        it('should return false if true is passed', function(done){
+            var request = require(tmp.path);
+            var val = request.setRequiredUrl(true);
+            val.should.eql(false);
+            done();
+        });
+
+        it('should return false if empty string is passed', function(done){
+            var request = require(tmp.path);
+            var val = request.setRequiredUrl('');
+            val.should.eql(false);
+            done();
+        });
+
+        it('should return false if string is not a valid Regex pattern', function(done){
+            var request = require(tmp.path);
+            var val = request.setRequiredUrl('*');
+            val.should.eql(false);
+            done();
+        });
+
+        it('should return true if valid Regex pattern is passed and should add that pattern to requiredUrls', function(done){
+            var request = require(tmp.path);
+            var val = request.setRequiredUrl('abc');
             val.should.eql(true);
+            request.requiredUrls.length.should.eql(1);
+            request.requiredUrls.indexOf('abc').should.be.above(-1);
+            done();
+        });
+
+        it('should return true if another valid Regex pattern is passed and should add that pattern to requiredUrls', function(done){
+            var request = require(tmp.path);
+            var val = request.setRequiredUrl('def');
+            val.should.eql(true);
+            request.requiredUrls.length.should.eql(2);
+            request.requiredUrls.indexOf('def').should.be.above(-1);
+
+            // Reset the requiredurls
+            request.requiredUrls = [];
+
             done();
         });
 
