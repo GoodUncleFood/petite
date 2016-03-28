@@ -31,7 +31,7 @@ petite.disallowUrl('myservice/');
 ```
 
 ### Set header requirements
-To require certain headers for incoming requests, pass a key and a value to petite.requireHeader(). Keys are matched exactly. Values can be set as an regEx pattern (passwed as a string).
+To require certain headers for incoming requests, pass a key and a value to petite.requireHeader(). Keys are matched exactly. Values can be set as an regEx pattern (passed as a string).
 
 ```js
 petite.requireHeader('accept','application/json');

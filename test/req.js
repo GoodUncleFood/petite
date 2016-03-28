@@ -125,21 +125,142 @@ describe('Req object', function(){
 
     // Process
     describe('Process', function(){
-
+        // @TODO
     });
 
-    // requiredHeaders
-    describe('requiredHeaders', function(){
-
-    });
 
     // setRequiredHeader
     describe('setRequiredHeader', function(){
 
-        it('should return true', function(done){
+        it('requiredHeaders should be empty array before being manipulated', function(done){
+            var request = require(tmp.path);
+            var type = typeof(request.requiredHeaders);
+            type.should.eql('object');
+            var instance = request.requiredHeaders instanceof Array;
+            instance.should.eql(true);
+            request.requiredHeaders.length.should.eql(0);
+            done();
+        });
+
+        it('should return false if no key or pattern are passed', function(done){
             var request = require(tmp.path);
             var val = request.setRequiredHeader();
+            val.should.eql(false);
+            done();
+        });
+
+        it('should return false if no key is passed', function(done){
+            var request = require(tmp.path);
+            var val = request.setRequiredHeader(undefined, 'abc');
+            val.should.eql(false);
+            done();
+        });
+
+        it('should return false if object is passed as key', function(done){
+            var request = require(tmp.path);
+            var val = request.setRequiredHeader({}, 'abc');
+            val.should.eql(false);
+            done();
+        });
+
+        it('should return false if null is passed as key', function(done){
+            var request = require(tmp.path);
+            var val = request.setRequiredHeader(null, 'abc');
+            val.should.eql(false);
+            done();
+        });
+
+        it('should return false if false is passed as key', function(done){
+            var request = require(tmp.path);
+            var val = request.setRequiredHeader(false, 'abc');
+            val.should.eql(false);
+            done();
+        });
+
+        it('should return false if true is passed as key', function(done){
+            var request = require(tmp.path);
+            var val = request.setRequiredHeader(true, 'abc');
+            val.should.eql(false);
+            done();
+        });
+
+        it('should return false if empty string is passed as key', function(done){
+            var request = require(tmp.path);
+            var val = request.setRequiredHeader('', 'abc');
+            val.should.eql(false);
+            done();
+        });
+
+        it('should return false if no pattern is passed', function(done){
+            var request = require(tmp.path);
+            var val = request.setRequiredHeader('foo');
+            val.should.eql(false);
+            done();
+        });
+
+        it('should return false if object is passed as pattern', function(done){
+            var request = require(tmp.path);
+            var val = request.setRequiredHeader('foo',{});
+            val.should.eql(false);
+            done();
+        });
+
+        it('should return false if null is passed as pattern', function(done){
+            var request = require(tmp.path);
+            var val = request.setRequiredHeader('foo',null);
+            val.should.eql(false);
+            done();
+        });
+
+        it('should return false if false is passed as pattern', function(done){
+            var request = require(tmp.path);
+            var val = request.setRequiredHeader('foo',false);
+            val.should.eql(false);
+            done();
+        });
+
+        it('should return false if true is passed as pattern', function(done){
+            var request = require(tmp.path);
+            var val = request.setRequiredHeader('foo',true);
+            val.should.eql(false);
+            done();
+        });
+
+        it('should return false if empty string is passed as pattern', function(done){
+            var request = require(tmp.path);
+            var val = request.setRequiredHeader('foo','');
+            val.should.eql(false);
+            done();
+        });
+
+        it('should return false if pattern string is not a valid Regex pattern', function(done){
+            var request = require(tmp.path);
+            var val = request.setRequiredHeader('foo','*');
+            val.should.eql(false);
+            done();
+        });
+
+        it('should return true if valid Regex pattern is passed and should add that pattern to requiredUrls', function(done){
+            var request = require(tmp.path);
+            var val = request.setRequiredHeader('foo', 'abc');
             val.should.eql(true);
+            request.requiredHeaders.length.should.eql(1);
+            request.requiredHeaders[0].key.should.eql('foo');
+            request.requiredHeaders[0].value.should.eql('abc');
+            done();
+        });
+
+        it('should return true if another valid Regex pattern is passed and should add that pattern to requiredUrls', function(done){
+            var request = require(tmp.path);
+            var val = request.setRequiredHeader('fizz','buzz');
+            val.should.eql(true);
+            request.requiredHeaders.length.should.eql(2);
+            request.requiredHeaders[1].key.should.eql('fizz');
+            request.requiredHeaders[1].value.should.eql('buzz');
+
+            // Reset the requiredurls
+            request.requiredHeaders = [];
+
             done();
         });
 
@@ -147,7 +268,7 @@ describe('Req object', function(){
 
     // checkHeaders
     describe('checkHeaders', function(){
-
+        // @TODO
     });
 
     // setRequiredUrl
