@@ -125,7 +125,146 @@ describe('Req object', function(){
 
     // Process
     describe('Process', function(){
-        // @TODO
+
+        it('should return false if url does not meet requirements', function(done){
+            var app = require(tmp.index_path);
+            var tmpController = function(data, callback){
+                callback(200);
+            };
+            app.addController('post',tmpController);
+            var request = app.lib.req;
+            app.requireUrl('fizz');
+            var req = {
+                'url' : 'foo/bar/?fizz=buzz',
+                'method' : 'POST',
+                'headers' : {
+                    'accept-encoding' : 'gzip'
+                },
+                'body' : {
+                    'lorem' : 'ipsum'
+                }
+            };
+            var res = {
+                'setHeader' : function(){},
+                'writeHead' : function(){},
+                'end' : function(){}
+            };
+            var val = request.process(req,res);
+            val.should.eql(false);
+            app.lib.controllers.set = {};
+            request.requiredUrls = [];
+            done();
+        });
+
+        it('should return false if headers do not meet requirements', function(done){
+            var app = require(tmp.index_path);
+            var tmpController = function(data, callback){
+                callback(200);
+            };
+            app.addController('post',tmpController);
+            app.requireHeader('key','value');
+            var request = app.lib.req;
+            var req = {
+                'url' : 'foo/bar/?fizz=buzz',
+                'method' : 'POST',
+                'headers' : {
+                    'accept-encoding' : 'gzip'
+                },
+                'body' : {
+                    'lorem' : 'ipsum'
+                }
+            };
+            var res = {
+                'setHeader' : function(){},
+                'writeHead' : function(){},
+                'end' : function(){}
+            };
+            var val = request.process(req,res);
+            val.should.eql(false);
+            app.lib.controllers.set = {};
+            request.requiredHeaders = [];
+            done();
+        });
+
+        it('should return false if no matching controller is found', function(done){
+            var app = require(tmp.index_path);
+            var request = app.lib.req;
+            var req = {
+                'url' : 'foo/bar/?fizz=buzz',
+                'method' : 'POST',
+                'headers' : {
+                    'accept-encoding' : 'gzip'
+                },
+                'body' : {
+                    'lorem' : 'ipsum'
+                }
+            };
+            var res = {
+                'setHeader' : function(){},
+                'writeHead' : function(){},
+                'end' : function(){}
+            };
+            var val = request.process(req,res);
+            val.should.eql(false);
+            done();
+        });
+
+        it('should return true if process makes it to controllers', function(done){
+            var app = require(tmp.index_path);
+            var tmpController = function(data, callback){
+                callback(200);
+            };
+            app.addController('post',tmpController);
+            var request = app.lib.req;
+            var req = {
+                'url' : 'foo/bar/?fizz=buzz',
+                'method' : 'POST',
+                'headers' : {
+                    'accept-encoding' : 'gzip'
+                },
+                'body' : {
+                    'lorem' : 'ipsum'
+                }
+            };
+            var res = {
+                'setHeader' : function(){},
+                'writeHead' : function(){},
+                'end' : function(){}
+            };
+            var val = request.process(req,res);
+            val.should.eql(true);
+            app.lib.controllers.set = {};
+            done();
+        });
+
+        it('should return true if process makes it to controllers, even if controller throws', function(done){
+            var app = require(tmp.index_path);
+            var tmpController = function(data, callback){
+                throw('This is a thrown exception');
+            };
+            app.addController('post',tmpController);
+            var request = app.lib.req;
+            var req = {
+                'url' : 'foo/bar/?fizz=buzz',
+                'method' : 'POST',
+                'headers' : {
+                    'accept-encoding' : 'gzip'
+                },
+                'body' : {
+                    'lorem' : 'ipsum'
+                }
+            };
+            var res = {
+                'setHeader' : function(){},
+                'writeHead' : function(){},
+                'end' : function(){}
+            };
+            var val = request.process(req,res);
+            val.should.eql(true);
+            app.lib.controllers.set = {};
+            done();
+        });
+
     });
 
 
