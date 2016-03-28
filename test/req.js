@@ -325,6 +325,230 @@ describe('Req object', function(){
     // checkUrl
     describe('checkUrl', function(){
 
+        it('should return 404 if no data object is passed', function(done){
+            var request = require(tmp.path);
+            var val = request.checkUrl();
+            val.should.eql(404);
+            done();
+        });
+
+        it('should return 404 if data object is empty', function(done){
+            var request = require(tmp.path);
+            var val = request.checkUrl({});
+            val.should.eql(404);
+            done();
+        });
+
+        it('should return 404 if path is false', function(done){
+            var request = require(tmp.path);
+            var val = request.checkUrl({
+                path : false
+            });
+            val.should.eql(404);
+            done();
+        });
+
+        it('should return 404 if path is true', function(done){
+            var request = require(tmp.path);
+            var val = request.checkUrl({
+                path : true
+            });
+            val.should.eql(404);
+            done();
+        });
+
+        it('should return 404 if path is number', function(done){
+            var request = require(tmp.path);
+            var val = request.checkUrl({
+                path : 123
+            });
+            val.should.eql(404);
+            done();
+        });
+
+        it('should return 404 if path is object and not null', function(done){
+            var request = require(tmp.path);
+            var val = request.checkUrl({
+                path : false
+            });
+            val.should.eql(404);
+            done();
+        });
+
+        it('should return undefined if path is a string, but no required or disallowed urls have been set', function(done){
+            var request = require(tmp.path);
+            var val = request.checkUrl({
+                'path' : 'foo'
+            });
+            var type = typeof(val);
+            type.should.eql('undefined');
+            done();
+        });
+
+        it('should return undefined if path is a null, but no required or disallowed urls have been set', function(done){
+            var request = require(tmp.path);
+            var val = request.checkUrl({
+                'path' : null
+            });
+            var type = typeof(val);
+            type.should.eql('undefined');
+            done();
+        });
+
+        it('should return undefined if path matches required url', function(done){
+            var request = require(tmp.path);
+            request.setRequiredUrl('abc');
+            var val = request.checkUrl({
+                'path' : 'abcd'
+            });
+            var type = typeof(val);
+            type.should.eql('undefined');
+            request.requiredUrls = [];
+            done();
+        });
+
+        it('should return 404 if path does not match required url', function(done){
+            var request = require(tmp.path);
+            request.setRequiredUrl('abc');
+            var val = request.checkUrl({
+                'path' : 'acdb'
+            });
+            val.should.eql(404);
+            request.requiredUrls = [];
+            done();
+        });
+
+        it('should return undefined if path does not match disallowed url', function(done){
+            var request = require(tmp.path);
+            request.setDisallowedUrl('abc');
+            var val = request.checkUrl({
+                'path' : 'acdb'
+            });
+            var type = typeof(val);
+            type.should.eql('undefined');
+            request.disallowedUrls = [];
+            done();
+        });
+
+        it('should return 404 if path matches disallowed url', function(done){
+            var request = require(tmp.path);
+            request.setDisallowedUrl('abc');
+            var val = request.checkUrl({
+                'path' : 'abcd'
+            });
+            val.should.eql(404);
+            request.disallowedUrls = [];
+            done();
+        });
+
+        it('should return 404 if path matches required url but also matches disallowedurl', function(done){
+            var request = require(tmp.path);
+            request.setRequiredUrl('a');
+            request.setDisallowedUrl('abc');
+            var val = request.checkUrl({
+                'path' : 'abcd'
+            });
+            val.should.eql(404);
+            request.requiredUrls = [];
+            request.disallowedUrls = [];
+            done();
+        });
+
+        it('should return undefined if path includes required element and nothing else, when that same url with a slash is disallowed', function(done){
+            var request = require(tmp.path);
+            request.setRequiredUrl('foo');
+            request.setDisallowedUrl('foo/');
+            var val = request.checkUrl({
+                'path' : 'foo'
+            });
+            var type = typeof(val);
+            type.should.eql('undefined');
+            request.requiredUrls = [];
+            request.disallowedUrls = [];
+            done();
+        });
+
+        it('should return 404 if path includes required element, but then a slash and other characters, which is disallowed', function(done){
+            var request = require(tmp.path);
+            request.setRequiredUrl('foo');
+            request.setDisallowedUrl('foo/');
+            var val = request.checkUrl({
+                'path' : 'foo/bar'
+            });
+            val.should.eql(404);
+            request.requiredUrls = [];
+            request.disallowedUrls = [];
+            done();
+        });
+
+        it('should return undefined if path is empty string and all paths of length 1 or more are disallowed', function(done){
+            var request = require(tmp.path);
+            request.setDisallowedUrl('.+');
+            var val = request.checkUrl({
+                'path' : ''
+            });
+            var type = typeof(val);
+            type.should.eql('undefined');
+            request.disallowedUrls = [];
+            done();
+        });
+
+        it('should return 404 if path is empty string and all paths of length 0 or more are disallowed', function(done){
+            var request = require(tmp.path);
+            request.setDisallowedUrl('.*');
+            var val = request.checkUrl({
+                'path' : ''
+            });
+            val.should.eql(404);
+            request.disallowedUrls = [];
+            done();
+        });
+
+        it('should return undefined if path is null and all paths of length 1 or more are disallowed', function(done){
+            var request = require(tmp.path);
+            request.setDisallowedUrl('.+');
+            var val = request.checkUrl({
+                'path' : null
+            });
+            var type = typeof(val);
+            type.should.eql('undefined');
+            request.disallowedUrls = [];
+            done();
+        });
+
+        it('should return 404 if path is null and all paths of length 0 or more are disallowed', function(done){
+            var request = require(tmp.path);
+            request.setDisallowedUrl('.*');
+            var val = request.checkUrl({
+                'path' : null
+            });
+            val.should.eql(404);
+            request.disallowedUrls = [];
+            done();
+        });
+
+        it('should return 404 if path is any string and all paths of length 1 or more are disallowed', function(done){
+            var request = require(tmp.path);
+            request.setDisallowedUrl('.+');
+            var val = request.checkUrl({
+                'path' : 'a'
+            });
+            val.should.eql(404);
+            request.disallowedUrls = [];
+            done();
+        });
+
+        it('should return 404 if path is any string and all paths of length 0 or more are disallowed', function(done){
+            var request = require(tmp.path);
+            request.setDisallowedUrl('.*');
+            var val = request.checkUrl({
+                'path' : 'a'
+            });
+            val.should.eql(404);
+            request.disallowedUrls = [];
+            done();
+        });
+
     });
 
     // checkMethod
