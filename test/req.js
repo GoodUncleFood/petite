@@ -239,7 +239,7 @@ describe('Req object', function(){
 
         it('should return null method if req.method is true', function(done){
             var req = {
-                'method' : null
+                'method' : true
             };
             var request = require(tmp.path);
             var val = request.getData(req);
@@ -314,6 +314,477 @@ describe('Req object', function(){
             var type = typeof(val.method);
             type.should.eql('string');
             val.method.should.eql('abc');
+            done();
+        });
+
+        it('should return null path if req.url is null', function(done){
+            var req = {
+                'url' : null
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var compare = val.path === null ? true : false;
+            compare.should.eql(true);
+            done();
+        });
+
+        it('should return null path if req.url is number', function(done){
+            var req = {
+                'url' : 123
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var compare = val.path === null ? true : false;
+            compare.should.eql(true);
+            done();
+        });
+
+        it('should return null path if req.url is false', function(done){
+            var req = {
+                'url' : false
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var compare = val.path === null ? true : false;
+            compare.should.eql(true);
+            done();
+        });
+
+        it('should return null path if req.url is true', function(done){
+            var req = {
+                'url' : null
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var compare = val.path === null ? true : false;
+            compare.should.eql(true);
+            done();
+        });
+
+        it('should return null path if req.url is object', function(done){
+            var req = {
+                'url' : {}
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var compare = val.path === null ? true : false;
+            compare.should.eql(true);
+            done();
+        });
+
+        it('should return null path if req.url is empty string', function(done){
+            var req = {
+                'url' : ''
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var compare = val.path === null ? true : false;
+            compare.should.eql(true);
+            done();
+        });
+
+        it('should return null path if req.url is space', function(done){
+            var req = {
+                'url' : ' '
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var compare = val.path === null ? true : false;
+            compare.should.eql(true);
+            done();
+        });
+
+        it('should return path if req.url is lowercased string ', function(done){
+            var req = {
+                'url' : 'abc'
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.path);
+            type.should.eql('string');
+            val.path.should.eql('abc');
+            done();
+        });
+
+        it('should return trimmed path if req.url has a leading or trailing space', function(done){
+            var req = {
+                'url' : 'abc '
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.path);
+            type.should.eql('string');
+            val.path.should.eql('abc');
+            done();
+        });
+
+        it('should return trimmed path if req.url has a leading slash', function(done){
+            var req = {
+                'url' : '/abc'
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.path);
+            type.should.eql('string');
+            val.path.should.eql('abc');
+            done();
+        });
+
+        it('should return trimmed path if req.url has a trailing slash', function(done){
+            var req = {
+                'url' : 'abc/'
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.path);
+            type.should.eql('string');
+            val.path.should.eql('abc');
+            done();
+        });
+
+        it('should return trimmed path if req.url has both a leading and trailing slash', function(done){
+            var req = {
+                'url' : '/abc/'
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.path);
+            type.should.eql('string');
+            val.path.should.eql('abc');
+            done();
+        });
+
+        it('should return trimmed path if req.url has multiple leading slashes', function(done){
+            var req = {
+                'url' : '//abc'
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.path);
+            type.should.eql('string');
+            val.path.should.eql('abc');
+            done();
+        });
+
+        it('should return trimmed path if req.url has a slash inside of it', function(done){
+            var req = {
+                'url' : 'a/bc'
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.path);
+            type.should.eql('string');
+            val.path.should.eql('a/bc');
+            done();
+        });
+
+        it('should return trimmed path if req.url has a query string appended to it', function(done){
+            var req = {
+                'url' : 'abc?foo=bar'
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.path);
+            type.should.eql('string');
+            val.path.should.eql('abc');
+            done();
+        });
+
+        it('should return trimmed path if req.url has a slash and query string appended to it', function(done){
+            var req = {
+                'url' : 'abc/?foo=bar'
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.path);
+            type.should.eql('string');
+            val.path.should.eql('abc');
+            done();
+        });
+
+        it('should return empty pathArray if req.url is null', function(done){
+            var req = {
+                'url' : null
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.pathArray);
+            type.should.eql('object');
+            var instance = val.pathArray instanceof Array;
+            instance.should.eql(true);
+            val.pathArray.length.should.eql(0);
+            done();
+        });
+
+        it('should return empty pathArray if req.url is number', function(done){
+            var req = {
+                'url' : 123
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.pathArray);
+            type.should.eql('object');
+            var instance = val.pathArray instanceof Array;
+            instance.should.eql(true);
+            val.pathArray.length.should.eql(0);
+            done();
+        });
+
+        it('should return empty pathArray if req.url is false', function(done){
+            var req = {
+                'url' : false
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.pathArray);
+            type.should.eql('object');
+            var instance = val.pathArray instanceof Array;
+            instance.should.eql(true);
+            val.pathArray.length.should.eql(0);
+            done();
+        });
+
+        it('should return empty pathArray if req.url is true', function(done){
+            var req = {
+                'url' : null
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.pathArray);
+            type.should.eql('object');
+            var instance = val.pathArray instanceof Array;
+            instance.should.eql(true);
+            val.pathArray.length.should.eql(0);
+            done();
+        });
+
+        it('should return empty pathArray if req.url is object', function(done){
+            var req = {
+                'url' : {}
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.pathArray);
+            type.should.eql('object');
+            var instance = val.pathArray instanceof Array;
+            instance.should.eql(true);
+            val.pathArray.length.should.eql(0);
+            done();
+        });
+
+        it('should return empty pathArray if req.url is empty string', function(done){
+            var req = {
+                'url' : ''
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.pathArray);
+            type.should.eql('object');
+            var instance = val.pathArray instanceof Array;
+            instance.should.eql(true);
+            val.pathArray.length.should.eql(0);
+            done();
+        });
+
+        it('should return empty pathArray if req.url is space', function(done){
+            var req = {
+                'url' : ' '
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.pathArray);
+            type.should.eql('object');
+            var instance = val.pathArray instanceof Array;
+            instance.should.eql(true);
+            val.pathArray.length.should.eql(0);
+            done();
+        });
+
+        it('should return single string in pathArray if req.url is lowercased string ', function(done){
+            var req = {
+                'url' : 'abc'
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.pathArray);
+            type.should.eql('object');
+            var instance = val.pathArray instanceof Array;
+            instance.should.eql(true);
+            val.pathArray.length.should.eql(1);
+            val.pathArray[0].should.eql('abc');
+            done();
+        });
+
+        it('should return single string in pathArray if req.url has a leading or trailing space', function(done){
+            var req = {
+                'url' : 'abc '
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.pathArray);
+            type.should.eql('object');
+            var instance = val.pathArray instanceof Array;
+            instance.should.eql(true);
+            val.pathArray.length.should.eql(1);
+            val.pathArray[0].should.eql('abc');
+            done();
+        });
+
+        it('should return single string in pathArray if req.url has a leading slash', function(done){
+            var req = {
+                'url' : '/abc'
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.pathArray);
+            type.should.eql('object');
+            var instance = val.pathArray instanceof Array;
+            instance.should.eql(true);
+            val.pathArray.length.should.eql(1);
+            val.pathArray[0].should.eql('abc');
+            done();
+        });
+
+        it('should return single string in pathArray if req.url has a trailing slash', function(done){
+            var req = {
+                'url' : 'abc/'
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.pathArray);
+            type.should.eql('object');
+            var instance = val.pathArray instanceof Array;
+            instance.should.eql(true);
+            val.pathArray.length.should.eql(1);
+            val.pathArray[0].should.eql('abc');
+            done();
+        });
+
+        it('should return single string in pathArray if req.url has both a leading and trailing slash', function(done){
+            var req = {
+                'url' : '/abc/'
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.pathArray);
+            type.should.eql('object');
+            var instance = val.pathArray instanceof Array;
+            instance.should.eql(true);
+            val.pathArray.length.should.eql(1);
+            val.pathArray[0].should.eql('abc');
+            done();
+        });
+
+        it('should return single string in pathArray if req.url has multiple leading slashes', function(done){
+            var req = {
+                'url' : '//abc'
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.pathArray);
+            type.should.eql('object');
+            var instance = val.pathArray instanceof Array;
+            instance.should.eql(true);
+            val.pathArray.length.should.eql(1);
+            val.pathArray[0].should.eql('abc');
+            done();
+        });
+
+        it('should return single string in pathArray if req.url has a query string appended to it', function(done){
+            var req = {
+                'url' : 'abc?foo=bar'
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.pathArray);
+            type.should.eql('object');
+            var instance = val.pathArray instanceof Array;
+            instance.should.eql(true);
+            val.pathArray.length.should.eql(1);
+            val.pathArray[0].should.eql('abc');
+            done();
+        });
+
+        it('should return single string in pathArray if req.url has a slash and query string appended to it', function(done){
+            var req = {
+                'url' : 'abc/?foo=bar'
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.pathArray);
+            type.should.eql('object');
+            var instance = val.pathArray instanceof Array;
+            instance.should.eql(true);
+            val.pathArray.length.should.eql(1);
+            val.pathArray[0].should.eql('abc');
+            done();
+        });
+
+        it('should return two strings in pathArray if req.url has a slash inside of it', function(done){
+            var req = {
+                'url' : 'a/bc'
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.pathArray);
+            type.should.eql('object');
+            var instance = val.pathArray instanceof Array;
+            instance.should.eql(true);
+            val.pathArray.length.should.eql(2);
+            val.pathArray[0].should.eql('a');
+            val.pathArray[1].should.eql('bc');
+            done();
+        });
+
+        it('should return 3 strings in pathArray if req.url has two slashes inside of it', function(done){
+            var req = {
+                'url' : 'a/b/c'
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.pathArray);
+            type.should.eql('object');
+            var instance = val.pathArray instanceof Array;
+            instance.should.eql(true);
+            val.pathArray.length.should.eql(3);
+            val.pathArray[0].should.eql('a');
+            val.pathArray[1].should.eql('b');
+            val.pathArray[2].should.eql('c');
+            done();
+        });
+
+        it('should return 3 strings in pathArray if req.url has a double slash inside of it', function(done){
+            var req = {
+                'url' : 'a//bc'
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.pathArray);
+            type.should.eql('object');
+            var instance = val.pathArray instanceof Array;
+            instance.should.eql(true);
+            val.pathArray.length.should.eql(3);
+            val.pathArray[0].should.eql('a');
+            val.pathArray[1].should.eql('');
+            val.pathArray[2].should.eql('bc');
+            done();
+        });
+
+        it('should return four strings in pathArray if req.url has a slash and a double slash inside of it', function(done){
+            var req = {
+                'url' : 'a/b//c'
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.pathArray);
+            type.should.eql('object');
+            var instance = val.pathArray instanceof Array;
+            instance.should.eql(true);
+            val.pathArray.length.should.eql(4);
+            val.pathArray[0].should.eql('a');
+            val.pathArray[1].should.eql('b');
+            val.pathArray[2].should.eql('');
+            val.pathArray[3].should.eql('c');
             done();
         });
 
