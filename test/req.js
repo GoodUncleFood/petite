@@ -996,6 +996,118 @@ describe('Req object', function(){
             done();
         });
 
+        it('should return empty headers object if no headers are sent', function(done){
+            var req = {};
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.headers);
+            type.should.eql('object');
+            val.headers.should.eql({});
+            done();
+        });
+
+        it('should return empty headers object if empty headers are sent', function(done){
+            var req = {
+                'headers' : {}
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.headers);
+            type.should.eql('object');
+            val.headers.should.eql({});
+            done();
+        });
+
+        it('should return empty headers object if headers are null', function(done){
+            var req = {
+                'headers' : null
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.headers);
+            type.should.eql('object');
+            val.headers.should.eql({});
+            done();
+        });
+
+        it('should return empty headers object if headers are false', function(done){
+            var req = {
+                'headers' : false
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.headers);
+            type.should.eql('object');
+            val.headers.should.eql({});
+            done();
+        });
+
+        it('should return empty headers object if headers are true', function(done){
+            var req = {
+                'headers' : true
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.headers);
+            type.should.eql('object');
+            val.headers.should.eql({});
+            done();
+        });
+
+        it('should return empty headers object if headers are string', function(done){
+            var req = {
+                'headers' : 'foo'
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.headers);
+            type.should.eql('object');
+            val.headers.should.eql({});
+            done();
+        });
+
+        it('should return empty headers object if headers are number', function(done){
+            var req = {
+                'headers' : 123
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.headers);
+            type.should.eql('object');
+            val.headers.should.eql({});
+            done();
+        });
+
+        it('should return headers object with foo key if headers are object with foo key', function(done){
+            var req = {
+                'headers' : {
+                    'foo' : 'bar'
+                }
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.headers);
+            type.should.eql('object');
+            val.headers.foo.should.eql('bar');
+            done();
+        });
+
+        it('should return headers object with foo and fizz keys if headers are object with foo and fizz keys', function(done){
+            var req = {
+                'headers' : {
+                    'foo' : 'bar',
+                    'fizz' : 'buzz'
+                }
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.headers);
+            type.should.eql('object');
+            val.headers.foo.should.eql('bar');
+            val.headers.fizz.should.eql('buzz');
+            done();
+        });
+
     });
 
     // After
