@@ -48,7 +48,6 @@ gulp.task('test:unit', function () {
     }).on('error', process.exit.bind(process, 1)))
     .pipe(istanbul.writeReports())
     .pipe(istanbul.enforceThresholds({ thresholds: {
-      /*
         global: {
           statements: 90,
           branches: 90,
@@ -61,20 +60,6 @@ gulp.task('test:unit', function () {
           lines: 33,
           functions: 100
         }
-        */
-        global: {
-          statements: 0,
-          branches: 0,
-          lines: 0,
-          functions: 0
-        },
-        each: {
-          statements: 0,
-          branches: 0,
-          lines: 0,
-          functions: 0
-        }
-
       }
     }).on('error', process.exit.bind(process, 1)));
 });
