@@ -268,7 +268,155 @@ describe('Req object', function(){
 
     // checkHeaders
     describe('checkHeaders', function(){
-        // @TODO
+
+        it('should return 406 if no data object is passed', function(done){
+            var request = require(tmp.path);
+            var val = request.checkHeaders();
+            val.should.eql(406);
+            done();
+        });
+
+        it('should return 406 if data object is empty', function(done){
+            var request = require(tmp.path);
+            var val = request.checkHeaders({});
+            val.should.eql(406);
+            done();
+        });
+
+        it('should return 406 if headers is false', function(done){
+            var request = require(tmp.path);
+            var val = request.checkHeaders({
+                headers : false
+            });
+            val.should.eql(406);
+            done();
+        });
+
+        it('should return 406 if headers is true', function(done){
+            var request = require(tmp.path);
+            var val = request.checkHeaders({
+                headers : true
+            });
+            val.should.eql(406);
+            done();
+        });
+
+        it('should return 406 if headers is number', function(done){
+            var request = require(tmp.path);
+            var val = request.checkHeaders({
+                headers : 123
+            });
+            val.should.eql(406);
+            done();
+        });
+
+        it('should return 406 if headers is null', function(done){
+            var request = require(tmp.path);
+            var val = request.checkHeaders({
+                headers : null
+            });
+            val.should.eql(406);
+            done();
+        });
+
+        it('should return undefined if headers is empty object and not null but no header requirements have been set', function(done){
+            var request = require(tmp.path);
+            var val = request.checkHeaders({
+                headers : {}
+            });
+            var type = typeof(val);
+            type.should.eql('undefined');
+            done();
+        });
+
+        it('should return undefined if headers have multiple keys but no header requirements have been set', function(done){
+            var request = require(tmp.path);
+            var val = request.checkHeaders({
+                'headers' : {
+                    'foo' : 'bar',
+                    'fizz' : 'buzz'
+                }
+            });
+            var type = typeof(val);
+            type.should.eql('undefined');
+            done();
+        });
+
+        it('should return undefined if header meets the single requirement', function(done){
+            var request = require(tmp.path);
+            request.setRequiredHeader('foo','ba');
+            var val = request.checkHeaders({
+                'headers' : {
+                    'foo' : 'bar',
+                    'fizz' : 'buzz'
+                }
+            });
+            var type = typeof(val);
+            type.should.eql('undefined');
+            request.requiredHeaders = [];
+            done();
+        });
+
+        it('should return undefined if header meets the multiple requirements', function(done){
+            var request = require(tmp.path);
+            request.setRequiredHeader('foo','ba');
+            request.setRequiredHeader('fizz','.*');
+            var val = request.checkHeaders({
+                'headers' : {
+                    'foo' : 'bar',
+                    'fizz' : 'buzz'
+                }
+            });
+            var type = typeof(val);
+            type.should.eql('undefined');
+            request.requiredHeaders = [];
+            done();
+        });
+
+        it('should return 406 if headers does not meet the single requirement', function(done){
+            var request = require(tmp.path);
+            request.setRequiredHeader('fizz','bar');
+            var val = request.checkHeaders({
+                'headers' : {
+                    'foo' : 'bar',
+                    'fizz' : 'buzz'
+                }
+            });
+            val.should.eql(406);
+            request.requiredHeaders = [];
+            done();
+        });
+
+        it('should return 406 if headers does not meet one of the multiple requirements', function(done){
+            var request = require(tmp.path);
+            request.setRequiredHeader('foo','ba');
+            request.setRequiredHeader('fizz','bar');
+            var val = request.checkHeaders({
+                'headers' : {
+                    'foo' : 'bar',
+                    'fizz' : 'buzz'
+                }
+            });
+            val.should.eql(406);
+            request.requiredHeaders = [];
+            done();
+        });
+
+        it('should return 406 if headers does not meet any of the multiple requirements', function(done){
+            var request = require(tmp.path);
+            request.setRequiredHeader('foo','buzz');
+            request.setRequiredHeader('fizz','bar');
+            var val = request.checkHeaders({
+                'headers' : {
+                    'foo' : 'bar',
+                    'fizz' : 'buzz'
+                }
+            });
+            val.should.eql(406);
+            request.requiredHeaders = [];
+            done();
+        });
+
     });
 
     // setRequiredUrl
@@ -490,7 +638,7 @@ describe('Req object', function(){
         it('should return 404 if path is object and not null', function(done){
             var request = require(tmp.path);
             var val = request.checkUrl({
-                path : false
+                path : {}
             });
             val.should.eql(404);
             done();
