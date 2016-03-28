@@ -110,7 +110,7 @@ The data object contains all the request data you should need to process the req
 ```js
 {
   'path' : 'the/requested/path',
-  'pathArray' :,['the','requested','path'],
+  'pathArray' :['the','requested','path'],
   'params' : {'foo' : 'bar'},
   'payload' : {'fizz' : 'buzz'},
   'headers' : {'accept-encoding' : 'gzip'},
