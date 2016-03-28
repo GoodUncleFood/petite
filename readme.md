@@ -23,21 +23,23 @@ var petite = require('petite');
 ```
 
 ### Set url requirements for incoming requests
+To require a certain url pattern for incoming requests, pass a regEx pattern (as a string) to petite.requireUrl(). To disallow certain url patterns, pass a regEx pattern (as a string) to petite.disallowUrl().
 
 ```js
 petite.requireUrl('myservice')
-petite.disallowUrl('myservice/*');
+petite.disallowUrl('myservice/');
 ```
 
 ### Set header requirements
+To require certain headers for incoming requests, pass a key and a value to petite.requireHeader(). Keys are matched exactly. Values can be set as an regEx pattern (passwed as a string).
 
 ```js
-petite.requireHeader('accept','json');
-petite.requireHeader('client-id','*');
-petite.requireHeader('accept-encoding','gzip');
+petite.requireHeader('accept','application/json');
+petite.requireHeader('client-id','.+');
 ```
 
 ### Add controllers
+Pass an http method and the name of your controller function to petite.addController(). See "Setting Up Your Controllers" below, for more details on how to define your controllers.
 
 ```js
 petite.addController('POST', myPostController);
@@ -47,12 +49,14 @@ petite.addController('DELETE', myDeleteController);
 ```
 
 ### Define the default configuration
+Passing a key and value to petite.setConfig() will define a key for the default configuration.
 
 ```js
 petite.setConfig('key','value');
 ```
 
 ### Add environment-specific configuration.
+Passing a key, value, and an environment-name to petite.setConfig() will define a key for the environment named.
 
 ```js
 petite.setConfig('key','value','environmentName');
@@ -63,8 +67,11 @@ Note: Each environment inherits all the default config variables, which you can 
 * log : true (Should the service log events and message to the console?)
 * debug : false (Should the service throw exceptions when they are encountered?)
 
+See the "Accessing config data" section below for more details on how environment-specific configuration works.
+
 
 ### Start the service
+The petite.start() function takes no arguments.
 
 ```js
 petite.start();
