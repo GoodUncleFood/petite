@@ -1108,6 +1108,150 @@ describe('Req object', function(){
             done();
         });
 
+        it('should return empty payload object if no body is sent', function(done){
+            var req = {};
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.payload);
+            type.should.eql('object');
+            val.payload.should.eql({});
+            done();
+        });
+
+        it('should return empty payload object if empty body is sent', function(done){
+            var req = {
+                'body' : {}
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.payload);
+            type.should.eql('object');
+            val.payload.should.eql({});
+            done();
+        });
+
+        it('should return empty payload object if body is null', function(done){
+            var req = {
+                'body' : null
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.payload);
+            type.should.eql('object');
+            val.payload.should.eql({});
+            done();
+        });
+
+        it('should return empty payload object if body is false', function(done){
+            var req = {
+                'body' : false
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.payload);
+            type.should.eql('object');
+            val.payload.should.eql({});
+            done();
+        });
+
+        it('should return empty payload object if body is true', function(done){
+            var req = {
+                'body' : true
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.payload);
+            type.should.eql('object');
+            val.payload.should.eql({});
+            done();
+        });
+
+        it('should return empty payload object if body is non JSON string', function(done){
+            var req = {
+                'body' : 'foo'
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.payload);
+            type.should.eql('object');
+            val.payload.should.eql({});
+            done();
+        });
+
+        it('should return empty payload object if body is number', function(done){
+            var req = {
+                'body' : 123
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.payload);
+            type.should.eql('object');
+            val.payload.should.eql({});
+            done();
+        });
+
+        it('should return empty payload object if body is object with foo key', function(done){
+            var req = {
+                'body' : {
+                    'foo' : 'bar'
+                }
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.payload);
+            type.should.eql('object');
+            val.payload.should.eql({});
+            done();
+        });
+
+        it('should return payload object with foo key if body is JSON string with foo key', function(done){
+            var req = {
+                'body' : {
+                    'foo' : 'bar'
+                }
+            };
+            req.body = JSON.stringify(req.body);
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.payload);
+            type.should.eql('object');
+            val.payload.foo.should.eql('bar');
+            done();
+        });
+
+        it('should return empty payload object body is object with foo and fizz keys', function(done){
+            var req = {
+                'body' : {
+                    'foo' : 'bar',
+                    'fizz' : 'buzz'
+                }
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.payload);
+            type.should.eql('object');
+            val.payload.should.eql({});
+            done();
+        });
+
+        it('should return payload object with foo and fizz keys if body is JSON string with foo and fizz keys', function(done){
+            var req = {
+                'body' : {
+                    'foo' : 'bar',
+                    'fizz' : 'buzz'
+                }
+            };
+            req.body = JSON.stringify(req.body);
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.payload);
+            type.should.eql('object');
+            val.payload.foo.should.eql('bar');
+            val.payload.fizz.should.eql('buzz');
+            done();
+        });
+
+
     });
 
     // After
