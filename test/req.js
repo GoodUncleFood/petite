@@ -171,6 +171,41 @@ describe('Req object', function(){
     // checkMethod
     describe('checkMethod', function(){
 
+        it('should return 405 if no data object is passed', function(done){
+            var request = require(tmp.path);
+            var val = request.checkMethod();
+            val.should.eql(405);
+            done();
+        });
+
+        it('should return 405 if data object is empty object', function(done){
+            var request = require(tmp.path);
+            var val = request.checkMethod({});
+            val.should.eql(405);
+            done();
+        });
+
+        it('should return 405 if data.method is a string that has no matching controller', function(done){
+            var request = require(tmp.path);
+            var val = request.checkMethod({
+                'method' : 'post'
+            });
+            val.should.eql(405);
+            done();
+        });
+
+        it('should return undefined if data.method is a string that has a matching controller', function(done){
+            var app = require(tmp.index_path);
+            app.lib.controllers.set.post = function(){};
+            var val = app.lib.req.checkMethod({
+                'method' : 'post'
+            });
+            var type = typeof(val);
+            type.should.eql('undefined');
+            app.lib.controllers.set = {};
+            done();
+        });
+
     });
 
     // getData
