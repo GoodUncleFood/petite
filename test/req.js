@@ -136,6 +136,13 @@ describe('Req object', function(){
     // setRequiredHeader
     describe('setRequiredHeader', function(){
 
+        it('should return true', function(done){
+            var request = require(tmp.path);
+            var val = request.setRequiredHeader();
+            val.should.eql(true);
+            done();
+        });
+
     });
 
     // checkHeaders
@@ -151,6 +158,13 @@ describe('Req object', function(){
     // setRequiredUrl
     describe('setRequiredUrl', function(){
 
+        it('should return true', function(done){
+            var request = require(tmp.path);
+            var val = request.setRequiredUrl();
+            val.should.eql(true);
+            done();
+        });
+
     });
 
     // disallowedUrls
@@ -160,6 +174,13 @@ describe('Req object', function(){
 
     // setDisallowedUrl
     describe('setDisallowedUrl', function(){
+
+        it('should return true', function(done){
+            var request = require(tmp.path);
+            var val = request.setDisallowedUrl();
+            val.should.eql(true);
+            done();
+        });
 
     });
 
