@@ -204,6 +204,119 @@ describe('Req object', function(){
             done();
         });
 
+        it('should return null method if req.method is null', function(done){
+            var req = {
+                'method' : null
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var compare = val.method === null ? true : false;
+            compare.should.eql(true);
+            done();
+        });
+
+        it('should return null method if req.method is number', function(done){
+            var req = {
+                'method' : 123
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var compare = val.method === null ? true : false;
+            compare.should.eql(true);
+            done();
+        });
+
+        it('should return null method if req.method is false', function(done){
+            var req = {
+                'method' : false
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var compare = val.method === null ? true : false;
+            compare.should.eql(true);
+            done();
+        });
+
+        it('should return null method if req.method is true', function(done){
+            var req = {
+                'method' : null
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var compare = val.method === null ? true : false;
+            compare.should.eql(true);
+            done();
+        });
+
+        it('should return null method if req.method is object', function(done){
+            var req = {
+                'method' : {}
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var compare = val.method === null ? true : false;
+            compare.should.eql(true);
+            done();
+        });
+
+        it('should return null method if req.method is empty string', function(done){
+            var req = {
+                'method' : ''
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var compare = val.method === null ? true : false;
+            compare.should.eql(true);
+            done();
+        });
+
+        it('should return null method if req.method is space', function(done){
+            var req = {
+                'method' : ' '
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var compare = val.method === null ? true : false;
+            compare.should.eql(true);
+            done();
+        });
+
+        it('should return  method if req.method is lowercased string ', function(done){
+            var req = {
+                'method' : 'abc'
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.method);
+            type.should.eql('string');
+            val.method.should.eql('abc');
+            done();
+        });
+
+        it('should return trimmed method if req.method has a leading or trailing space', function(done){
+            var req = {
+                'method' : 'abc '
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.method);
+            type.should.eql('string');
+            val.method.should.eql('abc');
+            done();
+        });
+
+        it('should return lowercased method if req.method has a capital letter', function(done){
+            var req = {
+                'method' : 'aBc'
+            };
+            var request = require(tmp.path);
+            var val = request.getData(req);
+            var type = typeof(val.method);
+            type.should.eql('string');
+            val.method.should.eql('abc');
+            done();
+        });
+
     });
 
     // After
