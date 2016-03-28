@@ -8,7 +8,7 @@ var config = require('./_config');
 var valid_response = require('./_validResponse');
 var tmp = require('./_tmpData');
 var should = require('should');
-var app = require('./../../index');
+var petite = require('./../../index');
 
 
 /*
@@ -24,42 +24,104 @@ describe('/test', function(){
      */
     before(function(done){
         // Set request urls
-        config.service = '';
+        config.service = 't';
         config.request = request(config.base_url);
 
-        tmp = {
-            index_path: './../../index'
-        };
-
-        var app = require(tmp.index_path);
-
-        // Add the controller
+        // Define a normal controller
         var controller = function(data,callback){
             callback(200,{'foo':'bar'});
         };
 
-        // Start the server
-        app.addController('POST',controller);
-        
-        app.lib.server.listen();
+        // Define a controller that throws
+        var controllerThatThrows = function(data,callback){
+            throw('This is a thrown exception');
+        };
+
+        // Require certain urls
+        petite.requireUrl('test');
+
+        // Disallow certain urls
+        petite.disallowUrl('test/');
+
+        // Require certain headers
+        petite.requireHeader('client-id','.+');
+
+        // Add the controllers
+        petite.addController('POST',controller);
+        petite.addController('GET',controllerThatThrows);
+
+        // Set default config
+        petite.setConfig('foo','bar');
+
+        // Set environmental configs
+        petite.setConfig('fizz','buzz','testing');
+        petite.setConfig('lorem','ipsum','staging');
+
+        // Start the service
+        petite.start();
 
         done();
     });  
 
 
     /*
+     * Access Configs
+     *
+     */
+    describe('Access to Configs', function(){
+        it('default configs should be made available', function(done){
+            petite.config.foo.should.eql('bar');
+            done();
+        });
+
+        it('env-specific config should be made available', function(done){
+            petite.config.fizz.should.eql('buzz');
+            done();
+        });
+
+        it('configs from other envs should not be made available', function(done){
+            var type = typeof(petite.config.lorem);
+            type.should.eql('undefined');
+            done();
+        });
+    });
+
+    /*
      * POST
      *
      */
     describe('POST', function(){
-        it('should return 200', function(done){
+
+        it('should return 404 if url does not meet requirements', function(done){
         config.request
-            .post(config.service)
+            .post(config.service+'es')
             .set(config.valid_headers)
+            .set({'client-id' : 'foo'})
+            .expect(valid_response)
+            .expect(404)
+            .end(done);
+        });
+
+        it('should return 406 if headers do not pass', function(done){
+        config.request
+            .post(config.service+'est')
+            .set(config.valid_headers)
+            .set({'clientid' : 'foo'})
+            .expect(valid_response)
+            .expect(406)
+            .end(done);
+        });
+
+        it('should return 200 if url meets requirements, headers pass, and method has a controller', function(done){
+        config.request
+            .post(config.service+'est')
+            .set(config.valid_headers)
+            .set({'client-id' : 'foo'})
             .expect(valid_response)
             .expect(200)
             .end(done);
         });
+
     });
 
     /*
@@ -67,12 +129,33 @@ describe('/test', function(){
      *
      */
     describe('GET', function(){
-        it('should return 405', function(done){
+
+        it('should return 404 if url does not meet requirements', function(done){
         config.request
             .get(config.service)
             .set(config.valid_headers)
+            .set({'client-id' : 'foo'})
             .expect(valid_response)
-            .expect(405)
+            .expect(404)
+            .end(done);
+        });
+
+        it('should return 406 if headers do not meet requirements', function(done){
+        config.request
+            .get(config.service+'est')
+            .set(config.valid_headers)
+            .expect(valid_response)
+            .expect(406)
+            .end(done);
+        });
+
+        it('should return 500 because the controller throws', function(done){
+        config.request
+            .get(config.service+'est')
+            .set(config.valid_headers)
+            .set({'client-id' : 'foo'})
+            .expect(valid_response)
+            .expect(500)
             .end(done);
         });
     });
@@ -83,12 +166,33 @@ describe('/test', function(){
      *
      */
     describe('PUT', function(){
-        it('should return 405', function(done){
+
+        it('should return 404 if url does not meet requirements', function(done){
         config.request
             .put(config.service)
             .set(config.valid_headers)
+            .set({'client-id' : 'foo'})
+            .expect(valid_response)
+            .expect(404)
+            .end(done);
+        });
+
+        it('should return 405 if url and headers match but no controller is found', function(done){
+        config.request
+            .put(config.service+'est')
+            .set(config.valid_headers)
+            .set({'client-id' : 'foo'})
             .expect(valid_response)
             .expect(405)
+            .end(done);
+        });
+
+        it('should return 406 if headers dont meet the requirements', function(done){
+        config.request
+            .put(config.service+'est')
+            .set(config.valid_headers)
+            .expect(valid_response)
+            .expect(406)
             .end(done);
         });
     });
@@ -100,12 +204,33 @@ describe('/test', function(){
      */
 
     describe('DELETE', function(){
-        it('should return 405', function(done){
+
+        it('should return 404 if url does not meet requirements', function(done){
         config.request
-            .del(config.service)
+            .del(config.service+'est/extra')
             .set(config.valid_headers)
+            .set({'client-id' : 'foo'})
+            .expect(valid_response)
+            .expect(404)
+            .end(done);
+        });
+
+        it('should return 405 if url and headers meet requirements but no controller is found', function(done){
+        config.request
+            .del(config.service+'est')
+            .set(config.valid_headers)
+            .set({'client-id' : 'foo'})
             .expect(valid_response)
             .expect(405)
+            .end(done);
+        });
+
+        it('should return 406 if headers do not meet requirements', function(done){
+        config.request
+            .del(config.service+'est')
+            .set(config.valid_headers)
+            .expect(valid_response)
+            .expect(406)
             .end(done);
         });
     });
@@ -115,10 +240,10 @@ describe('/test', function(){
     after(function(done){
 
         // Remove the controllers
-        app.lib.controllers.set = {};
+        petite.lib.controllers.set = {};
 
         // Stop Server
-        app.lib.server.close();
+        petite.lib.server.close();
         done();
 
     }); 

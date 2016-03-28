@@ -6,7 +6,7 @@
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "test": "gulp test",
+    "test": "NODE_ENV=testing gulp test",
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
   },
   "homepage": "https://github.com/GoodUncleFood/petite",
