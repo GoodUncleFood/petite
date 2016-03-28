@@ -236,18 +236,87 @@ describe('Req object', function(){
 
     });
 
-    // disallowedUrls
-    describe('disallowedUrls', function(){
-
-    });
-
     // setDisallowedUrl
     describe('setDisallowedUrl', function(){
 
-        it('should return true', function(done){
+        it('disallowedUrls should be empty array before being manipulated', function(done){
+            var request = require(tmp.path);
+            var type = typeof(request.disallowedUrls);
+            type.should.eql('object');
+            var instance = request.disallowedUrls instanceof Array;
+            instance.should.eql(true);
+            request.disallowedUrls.length.should.eql(0);
+            done();
+        });
+
+        it('should return false if no pattern is passed', function(done){
             var request = require(tmp.path);
             var val = request.setDisallowedUrl();
+            val.should.eql(false);
+            done();
+        });
+
+        it('should return false if object is passed', function(done){
+            var request = require(tmp.path);
+            var val = request.setDisallowedUrl({});
+            val.should.eql(false);
+            done();
+        });
+
+        it('should return false if null is passed', function(done){
+            var request = require(tmp.path);
+            var val = request.setDisallowedUrl(null);
+            val.should.eql(false);
+            done();
+        });
+
+        it('should return false if false is passed', function(done){
+            var request = require(tmp.path);
+            var val = request.setDisallowedUrl(false);
+            val.should.eql(false);
+            done();
+        });
+
+        it('should return false if true is passed', function(done){
+            var request = require(tmp.path);
+            var val = request.setDisallowedUrl(true);
+            val.should.eql(false);
+            done();
+        });
+
+        it('should return false if empty string is passed', function(done){
+            var request = require(tmp.path);
+            var val = request.setDisallowedUrl('');
+            val.should.eql(false);
+            done();
+        });
+
+        it('should return false if string is not a valid Regex pattern', function(done){
+            var request = require(tmp.path);
+            var val = request.setDisallowedUrl('*');
+            val.should.eql(false);
+            done();
+        });
+
+        it('should return true if valid Regex pattern is passed and should add that pattern to disallowedUrls', function(done){
+            var request = require(tmp.path);
+            var val = request.setDisallowedUrl('abc');
             val.should.eql(true);
+            request.disallowedUrls.length.should.eql(1);
+            request.disallowedUrls.indexOf('abc').should.be.above(-1);
+            done();
+        });
+
+        it('should return true if another valid Regex pattern is passed and should add that pattern to disallowedUrls', function(done){
+            var request = require(tmp.path);
+            var val = request.setDisallowedUrl('def');
+            val.should.eql(true);
+            request.disallowedUrls.length.should.eql(2);
+            request.disallowedUrls.indexOf('def').should.be.above(-1);
+
+            // Reset the disallowedUrls
+            request.disallowedUrls = [];
+
             done();
         });
 
