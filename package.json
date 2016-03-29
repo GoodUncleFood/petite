@@ -30,9 +30,6 @@
     "restful",
     "rest"
   ],
-  "dependencies": {
-    "request-payload": "1.0.1"
-  },
   "devDependencies": {
     "coveralls": "^2.11.8",
     "gulp": "3.9.1",
