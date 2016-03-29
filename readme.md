@@ -2,6 +2,8 @@
 
 > Petite is a microservices framework designed to power a single RESTful JSON microservice on a single port. Petite services are presumed to be running behind an external router/reverse-proxy (in their own container, but as part of a larger set of API services). As such, each service only processes a single route, and allows you to define a single controller for each HTTP method accessible on that route. Petite has zero runtime dependencies and works on Node >= 4.0. Petite is developed and maintained by [Good Uncle](http://gooduncle.com).
 
+[![NPM](https://nodei.co/npm/petite.png?downloads=true&downloadRank=true)](https://nodei.co/npm/petite/)
+
 [![Build Status](https://travis-ci.org/GoodUncleFood/petite.svg?branch=master)](https://travis-ci.org/GoodUncleFood/petite)
 [![Dependency Status](https://gemnasium.com/GoodUncleFood/petite.svg)](https://gemnasium.com/GoodUncleFood/petite)
 [![Coverage Status](https://coveralls.io/repos/github/GoodUncleFood/petite/badge.svg?branch=master)](https://coveralls.io/github/GoodUncleFood/petite?branch=master)
