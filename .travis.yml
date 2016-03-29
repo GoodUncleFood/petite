@@ -4,7 +4,7 @@ node_js:
 notifications:
   email:
     recipients:
-      - malcolm@gmail.com
+      - malcolm@gooduncle.com
     on_success: always
     on_failure: always
 after_success: 'npm run coveralls'
