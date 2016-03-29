@@ -189,7 +189,7 @@ EXPOSE  3000
 
 The MIT License (MIT)
 
-Copyright (c) 2016 Rosco & Benedetto, Co. (Good Uncle)
+Copyright (c) 2016 [Rosco & Benedetto Co](http://gooduncle.com).
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
