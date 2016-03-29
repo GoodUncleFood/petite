@@ -141,7 +141,7 @@ After processing the data passed to it, your controller should callback two thin
   callback(200, {'foo':'bar'});
 ```
 
-### Full example
+### Controller example
 
 ```js
 var myPostController = function(data, callback){

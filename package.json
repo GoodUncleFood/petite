@@ -9,6 +9,10 @@
     "test": "NODE_ENV=testing gulp test",
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
   },
+  "engines" : {
+    "node" : ">=4.0.0",
+    "npm" : ">2.0.0"
+  },
   "homepage": "https://github.com/GoodUncleFood/petite",
   "bugs": {
     "url": "https://github.com/GoodUncleFood/petite/issues"
