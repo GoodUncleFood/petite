@@ -1,6 +1,6 @@
 {
   "name": "petite",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "A microservices framework for node.js",
   "author": "Malcolm Diggs <malcolmdiggs@gmail.com> (https://linkedin.com/in/malcolmdiggs)",
   "license": "MIT",
@@ -9,9 +9,9 @@
     "test": "NODE_ENV=testing gulp test",
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
   },
-  "engines" : {
-    "node" : ">=4.0.0",
-    "npm" : ">2.0.0"
+  "engines": {
+    "node": ">=4.0.0",
+    "npm": ">2.0.0"
   },
   "homepage": "https://github.com/GoodUncleFood/petite",
   "bugs": {
