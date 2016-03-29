@@ -37,6 +37,11 @@ describe('/test', function(){
             throw('This is a thrown exception');
         };
 
+        // Define a controller that echos back the payload
+        var controllerThatEchos = function(data,callback){
+            callback(200,data.payload);
+        };
+
         // Require certain urls
         petite.requireUrl('test');
 
@@ -49,6 +54,7 @@ describe('/test', function(){
         // Add the controllers
         petite.addController('POST',controller);
         petite.addController('GET',controllerThatThrows);
+        petite.addController('PUT',controllerThatEchos);
 
         // Set default config
         petite.setConfig('foo','bar');
@@ -177,16 +183,6 @@ describe('/test', function(){
             .end(done);
         });
 
-        it('should return 405 if url and headers match but no controller is found', function(done){
-        config.request
-            .put(config.service+'est')
-            .set(config.valid_headers)
-            .set({'client-id' : 'foo'})
-            .expect(valid_response)
-            .expect(405)
-            .end(done);
-        });
-
         it('should return 406 if headers dont meet the requirements', function(done){
         config.request
             .put(config.service+'est')
@@ -195,6 +191,42 @@ describe('/test', function(){
             .expect(406)
             .end(done);
         });
+
+        it('should return 200 if url and headers match', function(done){
+        config.request
+            .put(config.service+'est')
+            .set(config.valid_headers)
+            .set({'client-id' : 'foo'})
+            .expect(valid_response)
+            .expect(200)
+            .end(done);
+        });
+
+        it('should return payload if url and headers match', function(done){
+        config.request
+            .put(config.service+'est')
+            .send({
+                'lorem' : 'ipsum',
+                'sit' : 'amet',
+                'dolor' : 'consectuitir'
+            })
+            .set(config.valid_headers)
+            .set({'client-id' : 'foo'})
+            .expect(valid_response)
+            .expect(200)
+            .expect(function(res){
+                should.exist(res.body);
+                var body = res.body;
+                should.exist(body.lorem);
+                body.lorem.should.eql('ipsum');
+                should.exist(body.sit);
+                body.sit.should.eql('amet');
+                should.exist(body.dolor);
+                body.dolor.should.eql('consectuitir');
+            })
+            .end(done);
+        });
+
     });
 
 
