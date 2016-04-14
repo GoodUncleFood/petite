@@ -52,13 +52,13 @@ gulp.task('test:unit', function () {
           statements: 90,
           branches: 90,
           lines: 90,
-          functions: 100
+          functions: 90
         },
         each: {
-          statements: 66,
-          branches: 33,
-          lines: 33,
-          functions: 100
+          statements: 90,
+          branches: 90,
+          lines: 90,
+          functions: 90
         }
       }
     }).on('error', process.exit.bind(process, 1)));
