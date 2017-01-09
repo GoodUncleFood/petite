@@ -209,6 +209,53 @@ describe('Req object', function(){
             done();
         });
 
+        it('should return true if no matching controller is found but the request is OPTIONS', function(done){
+            var app = require(tmp.index_path);
+            var request = app.lib.req;
+            var req = {
+                'url' : 'foo/bar/?fizz=buzz',
+                'method' : 'OPTIONS',
+                'headers' : {
+                    'accept-encoding' : 'gzip'
+                },
+                'body' : {
+                    'lorem' : 'ipsum'
+                }
+            };
+            var res = {
+                'setHeader' : function(){},
+                'writeHead' : function(){},
+                'end' : function(){}
+            };
+            var val = request.process(req,res);
+            val.should.eql(true);
+            done();
+        });
+
+        it('should return false if no matching controller is found and the request is OPTIONS but cors is disabled', function(done){
+            var app = require(tmp.index_path);
+            app.config.cors = false;
+            var request = app.lib.req;
+            var req = {
+                'url' : 'foo/bar/?fizz=buzz',
+                'method' : 'OPTIONS',
+                'headers' : {
+                    'accept-encoding' : 'gzip'
+                },
+                'body' : {
+                    'lorem' : 'ipsum'
+                }
+            };
+            var res = {
+                'setHeader' : function(){},
+                'writeHead' : function(){},
+                'end' : function(){}
+            };
+            var val = request.process(req,res);
+            val.should.eql(false);
+            done();
+        });
+
         it('should return true if process makes it to controllers', function(done){
             var app = require(tmp.index_path);
             var tmpController = function(data, callback){
@@ -1035,6 +1082,68 @@ describe('Req object', function(){
             var type = typeof(val);
             type.should.eql('undefined');
             app.lib.controllers.set = {};
+            done();
+        });
+
+    });
+
+    // checkCors
+    describe('checkCors', function(){
+
+        it('should return undefined if nothing is passed', function(done){
+            var request = require(tmp.path);
+            var val = request.checkCors();
+            (typeof(val)).should.eql('undefined');
+            done();
+        });
+
+        it('should return undefined if no data object is passed', function(done){
+            var request = require(tmp.path);
+            var val = request.checkCors(true);
+            (typeof(val)).should.eql('undefined');
+            done();
+        });
+
+        it('should return undefined if data object is empty object', function(done){
+            var request = require(tmp.path);
+            var val = request.checkCors(true,{});
+            (typeof(val)).should.eql('undefined');
+            done();
+        });
+
+        it('should return undefined if data.method is POST and cors is true', function(done){
+            var request = require(tmp.path);
+            var val = request.checkCors(true,{
+                'method' : 'post'
+            });
+            (typeof(val)).should.eql('undefined');
+            done();
+        });
+
+        it('should return undefined if data.method is POST and cors is false', function(done){
+            var request = require(tmp.path);
+            var val = request.checkCors(false,{
+                'method' : 'post'
+            });
+            (typeof(val)).should.eql('undefined');
+            done();
+        });
+
+        it('should return 200 if data.method is OPTIONS and cors is true', function(done){
+            var request = require(tmp.path);
+            var val = request.checkCors(true,{
+                'method' : 'options'
+            });
+            val.should.eql(200);
+            done();
+        });
+
+        it('should return undefined if data.method is OPTIONS and cors is false', function(done){
+            var request = require(tmp.path);
+            var val = request.checkCors(false,{
+                'method' : 'options'
+            });
+            (typeof(val)).should.eql('undefined');
             done();
         });
 
