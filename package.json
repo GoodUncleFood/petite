@@ -1,6 +1,6 @@
 {
   "name": "petite",
-  "version": "1.0.10",
+  "version": "2.0.0",
   "description": "A microservices framework for node.js",
   "author": "Malcolm Diggs <malcolmdiggs@gmail.com> (https://linkedin.com/in/malcolmdiggs)",
   "license": "MIT",
@@ -35,7 +35,7 @@
     "rest"
   ],
   "devDependencies": {
-    "coveralls": "^2.11.8",
+    "coveralls": "2.11.8",
     "gulp": "3.9.1",
     "gulp-exit": "0.0.2",
     "gulp-istanbul": "0.10.3",
