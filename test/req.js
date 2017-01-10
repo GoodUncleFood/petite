@@ -209,32 +209,8 @@ describe('Req object', function(){
             done();
         });
 
-        it('should return true if no matching controller is found but the request is OPTIONS', function(done){
+        it('should return false if no matching controller is found and the request is OPTIONS', function(done){
             var app = require(tmp.index_path);
-            var request = app.lib.req;
-            var req = {
-                'url' : 'foo/bar/?fizz=buzz',
-                'method' : 'OPTIONS',
-                'headers' : {
-                    'accept-encoding' : 'gzip'
-                },
-                'body' : {
-                    'lorem' : 'ipsum'
-                }
-            };
-            var res = {
-                'setHeader' : function(){},
-                'writeHead' : function(){},
-                'end' : function(){}
-            };
-            var val = request.process(req,res);
-            val.should.eql(true);
-            done();
-        });
-
-        it('should return false if no matching controller is found and the request is OPTIONS but cors is disabled', function(done){
-            var app = require(tmp.index_path);
-            app.config.cors = false;
             var request = app.lib.req;
             var req = {
                 'url' : 'foo/bar/?fizz=buzz',
@@ -253,6 +229,30 @@ describe('Req object', function(){
             };
             var val = request.process(req,res);
             val.should.eql(false);
+            done();
+        });
+
+        it('should return true if no matching controller is found and the request is OPTION but cors is turned on', function(done){
+            var app = require(tmp.index_path);
+            app.config.cors = true;
+            var request = app.lib.req;
+            var req = {
+                'url' : 'foo/bar/?fizz=buzz',
+                'method' : 'OPTIONS',
+                'headers' : {
+                    'accept-encoding' : 'gzip'
+                },
+                'body' : {
+                    'lorem' : 'ipsum'
+                }
+            };
+            var res = {
+                'setHeader' : function(){},
+                'writeHead' : function(){},
+                'end' : function(){}
+            };
+            var val = request.process(req,res);
+            val.should.eql(true);
             done();
         });
 
