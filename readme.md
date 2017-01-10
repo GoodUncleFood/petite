@@ -68,7 +68,7 @@ Note: Each environment inherits all the default config variables, which you can 
 * port: 3000 (Which port the service should listen on)
 * log : true (Should the service log events and message to the console?)
 * debug : false (Should the service throw exceptions when they are encountered?)
-* cors : true (Should the service support CORS?) If set to true, all OPTIONS requests are returned with a 200, and the following headers are sent with all responses (in addition to the Content-Type : "application/json" header that is sent regardless):  
+* cors : false (Should the service support CORS?) If set to true, all OPTIONS requests are returned with a 200, and the following headers are sent with all responses (in addition to the Content-Type : "application/json" header that is sent regardless):  
   * Access-Control-Allow-Origin : "*"
   * Access-Control-Allow-Methods : "POST, GET, PUT, DELETE, OPTIONS"
   * Access-Control-Allow-Headers : "content-type, client-id, accept, accept-encoding, x-api-token"
